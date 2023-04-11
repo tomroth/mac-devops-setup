@@ -54,19 +54,19 @@
     - name: Add SSH key to GitHub
       shell: "cat ~/.ssh/id_rsa.pub | pbcopy"
       register: ssh_key
-      ignore_errors: yes
+      ignore_errors: true
 
     - name: Show SSH key
       debug:
         msg: "Copy the following SSH key and add it to your GitHub account: {{ ssh_key.stdout }}"
-      when: ssh_key.rc == 0
+      when: ssh_key is defined and ssh_key.rc == 0
 
     - name: Clone Git repository
       git:
         repo: 'https://github.com/tomroth/mac-devops-setup.git'
         dest: '~/code/mac-devops-setup'
-        update: yes
-      ignore_errors: yes
+        update: true
+      ignore_errors: true
 
     - name: Push latest changes to the remote repository
       shell: |
@@ -74,4 +74,4 @@
         git add .
         git commit -m "Update code from MacBook Setup playbook"
         git push
-      ignore_errors: yes
+      ignore_errors: true
