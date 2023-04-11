@@ -31,6 +31,10 @@
         - hashicorp.terraform
         - Github.copilot
         - ms-azuretools.vscode-docker
+        - rebornix.ruby
+        - wingrunr21.vscode-ruby
+        - castwide.solargraph
+        - streetsidesoftware.code-spell-checker
     
     - name: Check installed Visual Studio Code extensions
       shell: "code --list-extensions"
