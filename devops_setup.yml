@@ -12,6 +12,7 @@
         name:
           - git
           - python
+          - ansible-lint
         state: present
 
     - name: Install Homebrew Cask packages
