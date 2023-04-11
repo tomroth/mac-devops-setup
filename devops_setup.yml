@@ -2,7 +2,7 @@
 - name: DevOps Engineer MacBook Setup
   hosts: localhost
   connection: local
-  gather_facts: no
+  gather_facts: false
   vars:
     ansible_python_interpreter: "/usr/bin/env python3"
 
@@ -33,6 +33,7 @@
         # - ms-kubernetes-tools.vscode-kubernetes-tools
         # - redhat.vscode-yaml
         - hashicorp.terraform
+        - Github.copilot
         # - redhat.ansible
     
     - name: Check installed Visual Studio Code extensions
