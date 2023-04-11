@@ -28,13 +28,9 @@
     - name: Install Visual Studio Code extensions
       shell: "code --install-extension {{ item }}"
       with_items:
-        # - ms-azuretools.vscode-docker
-        # - eamodio.gitlens
-        # - ms-kubernetes-tools.vscode-kubernetes-tools
-        # - redhat.vscode-yaml
         - hashicorp.terraform
         - Github.copilot
-        # - redhat.ansible
+        - ms-azuretools.vscode-docker
     
     - name: Check installed Visual Studio Code extensions
       shell: "code --list-extensions"
@@ -44,11 +40,7 @@
     - name: Remove Visual Studio Code extensions
       shell: "code --uninstall-extension {{ item }}"
       with_items:
-        - ms-azuretools.vscode-docker
-        - eamodio.gitlens
-        - ms-kubernetes-tools.vscode-kubernetes-tools
-        # - redhat.vscode-yaml
-        - redhat.ansible
+        - ms-vscode.Go
       when: item in installed_extensions.stdout_lines
 
     - name: Add SSH key to GitHub
