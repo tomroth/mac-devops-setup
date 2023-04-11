@@ -1,0 +1,51 @@
+---
+- name: DevOps Engineer MacBook Setup
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python3"
+
+  tasks:
+    - name: Install Homebrew packages
+      homebrew:
+        name:
+          - git
+          - python
+        state: present
+
+    - name: Install Homebrew Cask packages
+      homebrew_cask:
+        name:
+          - visual-studio-code
+          - docker
+          - iterm2
+        state: present
+
+    - name: Install Visual Studio Code extensions
+      shell: "code --install-extension {{ item }}"
+      with_items:
+        - ms-azuretools.vscode-docker
+        #  - eamodio.gitlens
+        - ms-kubernetes-tools.vscode-kubernetes-tools
+        - redhat.vscode-yaml
+        - hashicorp.terraform
+        - redhat.ansible
+
+    - name: Add SSH key to GitHub
+      shell: "cat ~/.ssh/id_rsa.pub | pbcopy"
+      register: ssh_key
+      ignore_errors: yes
+
+    - name: Show SSH key
+      debug:
+        msg: "Copy the following SSH key and add it to your GitHub account: {{ ssh_key.stdout }}"
+      when: ssh_key.rc == 0
+
+    - name: Clone Git repository
+      git:
+        repo: 'https://github.com/tomroth/mac-devops-setup.git'
+        dest: '~/code/mac-devops-setup'
+        update: yes
+      ignore_errors: yes
+
