@@ -20,17 +20,34 @@
           - visual-studio-code
           - docker
           - iterm2
+          - 1password
+          - slack
         state: present
 
     - name: Install Visual Studio Code extensions
       shell: "code --install-extension {{ item }}"
       with_items:
-        - ms-azuretools.vscode-docker
-        #  - eamodio.gitlens
-        - ms-kubernetes-tools.vscode-kubernetes-tools
-        - redhat.vscode-yaml
+        # - ms-azuretools.vscode-docker
+        # - eamodio.gitlens
+        # - ms-kubernetes-tools.vscode-kubernetes-tools
+        # - redhat.vscode-yaml
         - hashicorp.terraform
+        # - redhat.ansible
+    
+    - name: Check installed Visual Studio Code extensions
+      shell: "code --list-extensions"
+      register: installed_extensions
+
+
+    - name: Remove Visual Studio Code extensions
+      shell: "code --uninstall-extension {{ item }}"
+      with_items:
+        - ms-azuretools.vscode-docker
+        - eamodio.gitlens
+        - ms-kubernetes-tools.vscode-kubernetes-tools
+        # - redhat.vscode-yaml
         - redhat.ansible
+      when: item in installed_extensions.stdout_lines
 
     - name: Add SSH key to GitHub
       shell: "cat ~/.ssh/id_rsa.pub | pbcopy"
@@ -49,3 +66,10 @@
         update: yes
       ignore_errors: yes
 
+    - name: Push latest changes to the remote repository
+      shell: |
+        cd ~/code/mac-devops-setup
+        git add .
+        git commit -m "Update code from MacBook Setup playbook"
+        git push
+      ignore_errors: yes
