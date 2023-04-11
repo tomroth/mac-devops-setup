@@ -41,11 +41,11 @@
       register: installed_extensions
 
 
-    - name: Remove Visual Studio Code extensions
-      shell: "code --uninstall-extension {{ item }}"
-      with_items:
-        - ms-vscode.Go
-      when: item in installed_extensions.stdout_lines
+    # - name: Remove Visual Studio Code extensions
+    #   shell: "code --uninstall-extension {{ item }}"
+    #   with_items:
+    #     - ms-vscode.Go
+    #   when: item in installed_extensions.stdout_lines
 
     - name: Add SSH key to GitHub
       shell: "cat ~/.ssh/id_rsa.pub | pbcopy"
