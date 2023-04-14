@@ -1,57 +1,24 @@
 # DevOps Engineer MacBook Setup
 
-This Ansible playbook automates the setup process for a DevOps Engineer's MacBook, installing necessary tools and configuring the development environment.
+This playbook sets up a new MacBook for a DevOps Engineer.
 
-## Prerequisites
+## What does it do?
 
-1. Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-2. Ensure you have Python 3 installed.
+The provided Ansible playbook automates the following tasks:
 
-## Tools and Packages Installed
+1. Install Homebrew packages
+2. Install Homebrew Cask packages
+3. Check and list installed Visual Studio Code extensions
+4. Install Visual Studio Code extensions
+5. Configure .zshrc file
 
-- Homebrew packages:
-  - git
-  - python
-  - ansible-lint
-- Homebrew Cask packages:
-  - Visual Studio Code
-  - Docker
-  - iTerm2
-  - 1Password
-  - Slack
-  - Google Chrome
-- Visual Studio Code extensions:
-  - hashicorp.terraform
-  - github.copilot
-  - ms-azuretools.vscode-docker
-  - rebornix.ruby
-  - wingrunr21.vscode-ruby
-  - castwide.solargraph
-  - streetsidesoftware.code-spell-checker
+## Usage
 
-## How to Use
+To use the playbook, follow these steps:
 
-* Clone this repository to your local machine:
+1. Install [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) on your MacBook.
+2. Clone this repository: `git clone https://github.com/tomroth/mac-devops-setup.git`
+3. Change to the repository directory: `cd mac-devops-setup`
+4. Run the playbook: `ansible-playbook mac-devops-setup.yml`
 
-```bash
-git clone https://github.com/tomroth/mac-devops-setup.git
-cd mac-devops-setup
-```
-
-* Run the Ansible playbook:
-
-```
-ansible-playbook devops_setup.yml
-```
-
-* Follow any on-screen instructions, such as adding your SSH key to your GitHub account.
-
-* Once the playbook has finished running, your MacBook will be set up with the required tools and packages for a DevOps Engineer.
-
-## Contributing
-
-If you'd like to add new features or make changes to this playbook, please submit a pull request with your proposed changes. Ensure your changes are well-documented and tested before submitting the pull request.
-
-## License
-
-This project is licensed under the MIT License.
+This will configure your MacBook with the specified packages and settings.
