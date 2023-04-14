@@ -42,6 +42,35 @@
         - streetsidesoftware.code-spell-checker
       when: item not in installed_extensions.stdout_lines
 
+    - name: Configure .zshrc file
+      copy:
+        content: |
+          # Set the default editor to Vim
+          export EDITOR=vim
+
+          # Add some useful aliases
+          alias ll='ls -alF'
+          alias grep='grep --color=auto'
+          alias meow='echo meow'
+
+          # Load Oh My Zsh plugins
+          plugins=(git zsh-syntax-highlighting)
+
+          # Set the Oh My Zsh theme
+          ZSH_THEME="robbyrussell"
+
+          # Set the default language to English
+          export LANG=en_US.UTF-8
+
+          # Store 1000 commands in the history
+          HISTSIZE=1000
+
+          # Ignore duplicate commands
+          HISTCONTROL=ignoreboth
+        dest: "~/.zshrc"
+        backup: yes
+        mode: 0644
+
 
     # - name: Remove Visual Studio Code extensions
     #   shell: "code --uninstall-extension {{ item }}"
