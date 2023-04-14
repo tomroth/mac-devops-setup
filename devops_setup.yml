@@ -52,6 +52,7 @@
           alias ll='ls -alF'
           alias grep='grep --color=auto'
           alias meow='echo meow'
+          alias meowmeow='echo meowmeow'
 
           # Load Oh My Zsh plugins
           plugins=(git zsh-syntax-highlighting)
