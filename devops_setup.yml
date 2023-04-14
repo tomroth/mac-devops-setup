@@ -27,9 +27,16 @@
           - discord
         state: present
 
-    - name: Check installed Visual Studio Code extensions
-      shell: "code --list-extensions"
-      register: installed_extensions   
+    - name: Check and list installed Visual Studio Code extensions
+      block:
+        - name: Check installed Visual Studio Code extensions
+          shell: "code --list-extensions"
+          register: installed_extensions   
+
+        - name: List installed_extensions
+          debug:
+            var: installed_extensions.stdout_lines
+
 
     - name: Install Visual Studio Code extensions
       shell: "code --install-extension {{ item }}"
@@ -41,7 +48,7 @@
         - wingrunr21.vscode-ruby
         - castwide.solargraph
         - streetsidesoftware.code-spell-checker
-      when: item not in installed_extensions.stdout_lines
+      when: item.lower() not in (installed_extensions.stdout | lower).splitlines()
 
     - name: Configure .zshrc file
       copy:
@@ -78,29 +85,25 @@
     #     - ms-vscode.Go
     #   when: item in installed_extensions.stdout_lines
 
-    - name: Add SSH key to GitHub
-      shell: "cat ~/.ssh/id_rsa.pub | pbcopy"
-      register: ssh_key
-      ignore_errors: true
+    # - name: Add SSH key to GitHub
+    #   shell: "cat ~/.ssh/id_rsa.pub | pbcopy"
+    #   register: ssh_key
+    #   ignore_errors: true
 
-    - name: Show SSH key
-      debug:
-        msg: "Copy the following SSH key and add it to your GitHub account: {{ ssh_key.stdout }}"
-      when: ssh_key is defined and ssh_key.rc == 0
+    # - name: Show SSH key
+    #   debug:
+    #     msg: "Copy the following SSH key and add it to your GitHub account: {{ ssh_key.stdout }}"
+    #   when: ssh_key is defined and ssh_key.rc == 0
 
-    - name: Clone Git repository
-      git:
-        repo: 'https://github.com/tomroth/mac-devops-setup.git'
-        dest: '~/code/mac-devops-setup'
-        update: true
-      ignore_errors: true
-      register: git_clone
+    # - name: Create and switch to new branch
+    #   shell: |
+    #     cd ~/code/mac-devops-setup
+    #     git checkout -b devops-setup-update
 
-    - name: Push latest changes to the remote repository
-      shell: |
-        cd ~/code/mac-devops-setup
-        git add .
-        git commit -m "Update code from MacBook Setup playbook"
-        git push
-      ignore_errors: true
-      
+    # - name: Push latest changes to the remote repository
+    #   shell: |
+    #     cd ~/code/mac-devops-setup
+    #     git add .
+    #     git commit -m "Update code from MacBook Setup playbook"
+    #     git push --set-upstream origin devops-setup-update
+    #   ignore_errors: true
