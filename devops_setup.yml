@@ -88,19 +88,17 @@
         msg: "Copy the following SSH key and add it to your GitHub account: {{ ssh_key.stdout }}"
       when: ssh_key is defined and ssh_key.rc == 0
 
-    - name: Clone Git repository
-      git:
-        repo: 'https://github.com/tomroth/mac-devops-setup.git'
-        dest: '~/code/mac-devops-setup'
-        update: true
-      ignore_errors: true
-      register: git_clone
+    - name: Create and switch to new branch
+      shell: |
+        cd ~/code/mac-devops-setup
+        git checkout -b devops-setup-update
 
     - name: Push latest changes to the remote repository
       shell: |
         cd ~/code/mac-devops-setup
         git add .
         git commit -m "Update code from MacBook Setup playbook"
-        git push
+        git push --set-upstream origin devops-setup-update
       ignore_errors: true
+
       
