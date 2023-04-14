@@ -26,21 +26,21 @@
           - google-chrome
         state: present
 
+    - name: Check installed Visual Studio Code extensions
+      shell: "code --list-extensions"
+      register: installed_extensions   
+
     - name: Install Visual Studio Code extensions
       shell: "code --install-extension {{ item }}"
       with_items:
         - hashicorp.terraform
-        - Github.copilot
+        - github.copilot
         - ms-azuretools.vscode-docker
         - rebornix.ruby
         - wingrunr21.vscode-ruby
         - castwide.solargraph
         - streetsidesoftware.code-spell-checker
       when: item not in installed_extensions.stdout_lines
-    
-    - name: Check installed Visual Studio Code extensions
-      shell: "code --list-extensions"
-      register: installed_extensions
 
 
     # - name: Remove Visual Studio Code extensions
@@ -65,6 +65,7 @@
         dest: '~/code/mac-devops-setup'
         update: true
       ignore_errors: true
+      register: git_clone
 
     - name: Push latest changes to the remote repository
       shell: |
