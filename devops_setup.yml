@@ -23,6 +23,7 @@
           - iterm2
           - 1password
           - slack
+          - google-chrome
         state: present
 
     - name: Install Visual Studio Code extensions
@@ -35,6 +36,7 @@
         - wingrunr21.vscode-ruby
         - castwide.solargraph
         - streetsidesoftware.code-spell-checker
+      when: item not in installed_extensions.stdout_lines
     
     - name: Check installed Visual Studio Code extensions
       shell: "code --list-extensions"
